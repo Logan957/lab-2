@@ -1,0 +1,24 @@
+version: "3.5"
+services:
+  db_university:
+    container_name: db_university
+    networks:
+      - my_network
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=postgres
+    image: postgres:14-alpine
+  app:
+    container_name: lab-2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db_university
+    networks:
+      - my_network
+networks:
+  my_network:
